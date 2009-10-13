@@ -110,47 +110,47 @@ class Test extends Data {
             $this->set_cache($cache_id, $result);
         }
     }
+}
 
-    class Test2 extends GNE {
+class Test2 extends GNE {
 
-        function test1() {
-            $cache_id = __CLASS__."->".__FUNCTION__."(".$content_feed_id.")";
-            $result = $this->get_cache($cache_id);    	
+    function test1() {
+        $cache_id = __CLASS__."->".__FUNCTION__."(".$content_feed_id.")";
+        $result = $this->get_cache($cache_id);    	
 
-            if(!$result)
-            {
-                $results = $this->db_get_all_assoc( "SELECT * FROM content_feed WHERE content_feed_id = '".$content_feed_id."'");    	
-                $result = $results[0];    		
-                $this->set_cache($cache_id, $result);
-            }
+        if(!$result)
+        {
+            $results = $this->db_get_all_assoc( "SELECT * FROM content_feed WHERE content_feed_id = '".$content_feed_id."'");    	
+            $result = $results[0];    		
+            $this->set_cache($cache_id, $result);
         }
     }
-    class Test3 extends TV {
+}
+class Test3 extends TV {
 
-        function test1() {
-            $cache_id = __CLASS__."->".__FUNCTION__."(".$content_feed_id.")";
-            $result = $this->get_cache($cache_id);    	
+    function test1() {
+        $cache_id = __CLASS__."->".__FUNCTION__."(".$content_feed_id.")";
+        $result = $this->get_cache($cache_id);    	
 
-            if(!$result)
-            {
-                $results = $this->db_get_all_assoc( "SELECT * FROM content_feed WHERE content_feed_id = '".$content_feed_id."'");    	
-                $result = $results[0];    		
-                $this->set_cache($cache_id, $result);
-            }
+        if(!$result)
+        {
+            $results = $this->db_get_all_assoc( "SELECT * FROM content_feed WHERE content_feed_id = '".$content_feed_id."'");    	
+            $result = $results[0];    		
+            $this->set_cache($cache_id, $result);
         }
     }
-    class Test4 extends Nulls {
+}
+class Test4 extends Nulls {
 
-        function test1() {
-            $cache_id = __CLASS__."->".__FUNCTION__."(".$content_feed_id.")";
-            $result = $this->get_cache($cache_id);    	
+    function test1() {
+        $cache_id = __CLASS__."->".__FUNCTION__."(".$content_feed_id.")";
+        $result = $this->get_cache($cache_id);    	
 
-            if(!$result)
-            {
-                $results = $this->db_get_all_assoc( "SELECT * FROM content_feed WHERE content_feed_id = '".$content_feed_id."'");    	
-                $result = $results[0];    		
-                $this->set_cache($cache_id, $result);
-            }
+        if(!$result)
+        {
+            $results = $this->db_get_all_assoc( "SELECT * FROM content_feed WHERE content_feed_id = '".$content_feed_id."'");    	
+            $result = $results[0];    		
+            $this->set_cache($cache_id, $result);
         }
     }
 }
