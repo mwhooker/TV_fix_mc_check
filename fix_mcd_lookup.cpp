@@ -7,6 +7,9 @@ using namespace std;
 using namespace AST;
 
 
+/**
+ * @todo check for other ways one might check for falseness
+ */
 class MCCheck : public Visitor {
     Variable *v;
     bool from_if;
@@ -30,7 +33,6 @@ public:
                             new List<Actual_parameter*>()
                         );
             }
-            cout << endl;
         }
     }
 
