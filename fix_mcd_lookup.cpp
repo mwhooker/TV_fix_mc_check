@@ -12,16 +12,16 @@ using namespace AST;
  */
 class MCCheck : public Transform {
     Variable *v;
-    bool from_if;
+    bool from_if, valid;
     Method_invocation *replace_with;
 
 public:
-    MCCheck() : v(NULL), from_if(false) {
+    MCCheck() : v(NULL), from_if(false), valid(false) {
         replace_with = new Method_invocation(
                 NULL,
                 new METHOD_NAME(new String("$this->last_memcache_lookup_succeeded")),
                 new List<Actual_parameter*>()
-                );
+            );
 
     };
 
@@ -46,12 +46,21 @@ public:
         out->push_back(in);
     }
 
-    Expr *pre_unary_op(Unary_op* in) {
-        if (in->op->match(new OP(new String("!")))
-                && in->expr->match(v)
-                && from_if) {
+    Variable *pre_variable(Variable* in) {
+        if (in->match(v) && valid && from_if) {
+            return dynamic_cast<Eval_expr*>(replace_with->clone());
+        }
+        return in;
+    }
 
-            in->expr = replace_with->clone();
+    Variable *post_variable(Variable* in) {
+        valid = false;
+        return in;
+    }
+
+    Expr *pre_unary_op(Unary_op* in) {
+        if (in->op->match(new OP(new String("!")))) {
+            valid = true;
         }
         return in;
     }
@@ -59,38 +68,19 @@ public:
     //if in an if statement and one of the operators is v, replace with method call expr
     Expr *pre_bin_op(Bin_op *in) {
         if ((in->op->match(new OP(new String("!=")))
-                    || in->op->match(new OP(new String("=="))))
-                && (in->left->match(v)
-                    || in->right->match(v))
-                && from_if) {
-
-            return replace_with->clone();
+                || in->op->match(new OP(new String("=="))))) {
+            valid = true;
+        /*    if (in->left->match(v)) {
+                in->left = replace_with->clone(); 
+            }
+            if (in->right->match(v)) {
+                in->right = replace_with->clone(); 
+            }
+            */
         }
         return in;
     }
     
-    /*
-    void pre_if(If* in) {
-        from_if = true;
-
-    }
-    
-    Expr *post_if(If* in) {
-        /
-        if (v != NULL && replace != NULL) {
-            in->expr = new Method_invocation(
-                    NULL,
-                    new METHOD_NAME(new String("$this->last_memcache_lookup_succeeded")),
-                    new List<Actual_parameter*>()
-                    );
-        }
-        /
-        v = NULL;
-        replace = NULL;
-        from_if = false;
-        return in;
-    }
-    */
 
 };
 
