@@ -111,6 +111,18 @@ class Test extends Data
             $this->set_cache($cache_id, $result);
         }
     }
+    
+    function test10()
+    {
+        $cache_id = __CLASS__ . "->" . __FUNCTION__ . "(" . $content_feed_id . ")";
+        $result = $this->get_cache($cache_id);
+        
+        if (mybla($result)) {
+            $results = $this->db_get_all_assoc("select * from content_feed where content_feed_id = '" . $content_feed_id . "'");
+            $result = $results[0];
+            $this->set_cache($cache_id, $result);
+        }
+    }
 }
 
 class Test2 extends GNE
